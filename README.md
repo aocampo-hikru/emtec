@@ -1,21 +1,37 @@
-# WhatsApp AI Assistant – Support & Sales  
+# WhatsApp AI Assistant – Support & Sales
 Serverless on AWS ‧ Bedrock ‧ Twilio WhatsApp ‧ React Admin UI
 
 ---
 
 ## ✨ Overview
-This repository deploys an end-to-end solution that:
+This repository deploys an end-to-end solution that integrates WhatsApp with Amazon Bedrock to classify intents and fill dynamic slots. Conversations are stored in DynamoDB and can be browsed through a minimal React admin portal served from S3/CloudFront.
 
-| Layer | Tech | Purpose |
-|-------|------|---------|
-| **Messaging** | Twilio WhatsApp → API Gateway | Receives customer messages via webhook |
-| **LLM Orchestration** | AWS Lambda + LangChain + **Amazon Bedrock** | Classifies intent (Soporte / Ventas) and does slot-filling |
-| **State** | DynamoDB (`ConversationState`) | Persists conversation context + message log |
-| **Integrations** | SOHO CRM (REST) • Lead mock | Creates casos de servicio o leads |
-| **Admin API** | API Gateway (x-api-key) | Lists & fetches conversations for the UI |
-| **Admin UI** | React 18 + Vite → S3 + CloudFront | Allows internal users to browse chats |
-| **IaC** | AWS CDK (v2, TypeScript) | Defines all cloud resources |
-| **CI / Tests** | Jest + npm scripts | Basic unit tests for Lambdas |
+## 📦 Packages
+- **cdk** – CDK app and Lambda source code.
+- **admin-frontend** – React admin interface.
 
-Architecture diagram (simplified):
+## 🚀 Deployment
+Install dependencies and run the CDK deploy command:
 
+```bash
+npm install
+npm --workspace=cdk run build
+cdk deploy
+```
+
+Set the environment variables `SOHO_CRM_API_URL`, `SOHO_CRM_API_KEY`, `ADMIN_API_KEY` and optionally `SLOT_CONFIG_JSON` before deployment.
+
+The admin UI can be built with:
+
+```bash
+npm --workspace=admin-frontend run build
+```
+
+The generated files in `admin-frontend/dist` should be uploaded to the S3 bucket indicated in the stack output.
+
+## 🧪 Tests
+Run unit tests with:
+
+```bash
+npm test
+```
