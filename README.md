@@ -1,5 +1,5 @@
-# WhatsApp AI Assistant – Support & Sales
-Serverless on AWS ‧ Bedrock ‧ Twilio WhatsApp ‧ React Admin UI
+# WhatsApp AI SaaS
+Serverless on AWS using Terraform.
 
 ---
 
@@ -7,19 +7,21 @@ Serverless on AWS ‧ Bedrock ‧ Twilio WhatsApp ‧ React Admin UI
 This repository deploys an end-to-end solution that integrates WhatsApp with Amazon Bedrock to classify intents and fill dynamic slots. Conversations are stored in DynamoDB and can be browsed through a minimal React admin portal served from S3/CloudFront.
 
 ## 📦 Packages
-- **cdk** – CDK app and Lambda source code.
+- **infra** – Terraform definitions.
+- **lambda** – Lambda TypeScript source.
 - **admin-frontend** – React admin interface.
 
 ## 🚀 Deployment
-Install dependencies and run the CDK deploy command:
+Install dependencies and deploy with Terraform:
 
 ```bash
 npm install
-npm --workspace=cdk run build
-cdk deploy
+npm --workspace=admin-frontend run build
+terraform -chdir=infra init
+terraform -chdir=infra apply
 ```
 
-Set the environment variables `SOHO_CRM_API_URL`, `SOHO_CRM_API_KEY`, `ADMIN_API_KEY` and optionally `SLOT_CONFIG_JSON` before deployment.
+Set environment variables such as `SOHO_CRM_URL`, `SOHO_CRM_KEY`, `STRIPE_KEY` and others in Terraform or the Lambda configuration.
 
 The admin UI can be built with:
 

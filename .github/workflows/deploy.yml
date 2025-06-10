@@ -1,0 +1,23 @@
+name: Deploy
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+      - run: npm install
+      - run: npm --workspace=admin-frontend run build
+      - uses: hashicorp/setup-terraform@v2
+      - run: terraform -chdir=infra init
+      - run: terraform -chdir=infra apply -auto-approve
+      - run: aws s3 sync admin-frontend/dist s3://$(terraform -chdir=infra output -raw frontend_bucket)
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION || 'us-east-1' }}
