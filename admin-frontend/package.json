@@ -1,0 +1,22 @@
+{
+  "name": "admin-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18",
+    "react-dom": "^18",
+    "zustand": "^4"
+  },
+  "devDependencies": {
+    "typescript": "^5",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "vite": "^4",
+    "@vitejs/plugin-react": "^4"
+  }
+}
